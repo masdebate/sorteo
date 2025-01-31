@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Grupos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            text-align: center;
+        }
+        h1 {
+            color: #1861b6;
+        }
+        table {
+            width: 60%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #1861b6;
+            color: white;
+        }
+        select {
+            width: 100%;
+            padding: 5px;
+        }
+        button {
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #1861b6;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #logo {
+    width: 500px; /* Antes estaba en 150px, ahora es 5 veces mayor */
+    margin: 20px auto;
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <img id="logo" src="logo.png" alt="Logo">
+    
+    <h1>SECUNDARIA</h1>
+    <table id="tablaSecundaria">
+        <tr>
+            <th>Grupo 1</th>
+            <th>Grupo 2</th>
+            <th>Grupo 3</th>
+            <th>Grupo 4</th>
+        </tr>
+        <script>
+            const secundariaOpciones = ["Seleccione equipo", "Maristas Lugo 1", "Maristas Lugo 2", "Puga Ramón 1", "Puga Ramón 2", "San José FEC", "Franciscanos Lugo 1", "Franciscanos Lugo 2", "Lucus Augusti 1", "Lucus Augusti 2", "Río Cabe", "Fingoi", "Santa María del Mar 1", "Santa María del Mar 2", "Filipenses Sagrada Familia", "Seminario Diocesano", "Val do Asma"];
+            
+            function actualizarOpciones(tablaId) {
+                const selects = document.querySelectorAll(`#${tablaId} select`);
+                let seleccionados = new Set();
+                selects.forEach(select => {
+                    if (select.value !== "Seleccione equipo") {
+                        seleccionados.add(select.value);
+                    }
+                });
+                selects.forEach(select => {
+                    const valorSeleccionado = select.value;
+                    select.innerHTML = "";
+                    secundariaOpciones.forEach(opcion => {
+                        if (!seleccionados.has(opcion) || opcion === valorSeleccionado || opcion === "Seleccione equipo") {
+                            let optionElement = document.createElement("option");
+                            optionElement.value = opcion;
+                            optionElement.textContent = opcion;
+                            if (opcion === valorSeleccionado) {
+                                optionElement.selected = true;
+                            }
+                            select.appendChild(optionElement);
+                        }
+                    });
+                });
+            }
+
+            for (let i = 0; i < 4; i++) {
+                document.write('<tr>');
+                for (let j = 0; j < 4; j++) {
+                    document.write('<td><select onchange="actualizarOpciones(\'tablaSecundaria\')">');
+                    secundariaOpciones.forEach(opcion => {
+                        document.write(`<option value="${opcion}">${opcion}</option>`);
+                    });
+                    document.write('</select></td>');
+                }
+                document.write('</tr>');
+            }
+        </script>
+    </table>
+    
+    <h1>BACHARELATO</h1>
+    <table id="tablaBacharelato">
+        <tr>
+            <th>Grupo 1</th>
+            <th>Grupo 2</th>
+            <th>Grupo 3</th>
+            <th>Grupo 4</th>
+        </tr>
+        <script>
+            const bacharelatoOpciones = ["Seleccione equipo", "Muralla Romana", "Puga Ramón 1", "Puga Ramón 2", "San José FEC", "Seminario Diocesano", "Lucus Augusti", "Río Cabe 1", "Río Cabe 2", "Río Cabe 3", "As Lagoas", "La Salle Santiago", "As Cacheiras"];
+            
+            function actualizarOpcionesBach(tablaId) {
+                const selects = document.querySelectorAll(`#${tablaId} select`);
+                let seleccionados = new Set();
+                selects.forEach(select => {
+                    if (select.value !== "Seleccione equipo") {
+                        seleccionados.add(select.value);
+                    }
+                });
+                selects.forEach(select => {
+                    const valorSeleccionado = select.value;
+                    select.innerHTML = "";
+                    bacharelatoOpciones.forEach(opcion => {
+                        if (!seleccionados.has(opcion) || opcion === valorSeleccionado || opcion === "Seleccione equipo") {
+                            let optionElement = document.createElement("option");
+                            optionElement.value = opcion;
+                            optionElement.textContent = opcion;
+                            if (opcion === valorSeleccionado) {
+                                optionElement.selected = true;
+                            }
+                            select.appendChild(optionElement);
+                        }
+                    });
+                });
+            }
+
+            for (let i = 0; i < 3; i++) {
+                document.write('<tr>');
+                for (let j = 0; j < 4; j++) {
+                    document.write('<td><select onchange="actualizarOpcionesBach(\'tablaBacharelato\')">');
+                    bacharelatoOpciones.forEach(opcion => {
+                        document.write(`<option value="${opcion}">${opcion}</option>`);
+                    });
+                    document.write('</select></td>');
+                }
+                document.write('</tr>');
+            }
+        </script>
+    </table>
+
+    <button onclick="descargarPDF()">Descargar PDF</button>
+
+    <script>
+        function descargarPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+
+        // Función para capturar una tabla como imagen
+        function captureTable(tableId) {
+            return new Promise((resolve) => {
+                const tableElement = document.getElementById(tableId);
+                html2canvas(tableElement, { scale: 2 }).then((canvas) => {  // Escala de 2 para mayor calidad
+                    const imgData = canvas.toDataURL('image/png');
+                    resolve(imgData);
+                });
+            });
+        }
+
+        // Captura las dos tablas y agrégalas al PDF
+        Promise.all([
+            captureTable('tablaSecundaria'),
+            captureTable('tablaBacharelato')
+        ]).then(([secundariaImg, bacharelatoImg]) => {
+            // Título para la tabla Secundaria
+            doc.setFontSize(18);
+            doc.text('SECUNDARIA', 10, 10); // Título "SECUNDARIA"
+            
+            // Agregar la imagen de la tabla secundaria
+            doc.addImage(secundariaImg, 'PNG', 10, 20, 190, 60);  // Ajustar las coordenadas y tamaño
+
+            // Título para la tabla Bacharelato
+            doc.setFontSize(18);
+            doc.text('BACHARELATO', 10, 100); // Título "BACHARELATO" (empezando después de la tabla secundaria)
+            
+            // Agregar la imagen de la tabla bacharelato
+            doc.addImage(bacharelatoImg, 'PNG', 10, 110, 190, 60);  // Ajustar las coordenadas y tamaño
+
+            // Guardar el PDF con el nombre deseado
+            doc.save('seleccion_grupos.pdf');
+        });
+    }
+    </script>
+</body>
+</html>
+
+
+
