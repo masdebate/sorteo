@@ -110,10 +110,9 @@
             <th>Grupo 1</th>
             <th>Grupo 2</th>
             <th>Grupo 3</th>
-            <th>Grupo 4</th>
         </tr>
         <script>
-            const bacharelatoOpciones = ["Seleccione equipo", "Muralla Romana", "Puga Ramón 1", "Puga Ramón 2", "San José FEC", "Seminario Diocesano", "Lucus Augusti", "Río Cabe 1", "Río Cabe 2", "Río Cabe 3", "As Lagoas", "La Salle Santiago", "As Cacheiras"];
+             const bacharelatoOpciones = ["Seleccione equipo", "Muralla Romana", "Puga Ramón 1", "Puga Ramón 2", "San José FEC", "Seminario Diocesano", "Lucus Augusti", "Río Cabe 1", "Río Cabe 2", "Río Cabe 3", "As Lagoas", "La Salle Santiago", "As Cacheiras"];
             
             function actualizarOpcionesBach(tablaId) {
                 const selects = document.querySelectorAll(`#${tablaId} select`);
@@ -140,9 +139,9 @@
                 });
             }
 
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 4; i++) {
                 document.write('<tr>');
-                for (let j = 0; j < 4; j++) {
+                for (let j = 0; j < 3; j++) {
                     document.write('<td><select onchange="actualizarOpcionesBach(\'tablaBacharelato\')">');
                     bacharelatoOpciones.forEach(opcion => {
                         document.write(`<option value="${opcion}">${opcion}</option>`);
@@ -198,6 +197,5 @@
     </script>
 </body>
 </html>
-
 
 
